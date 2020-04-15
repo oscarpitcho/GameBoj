@@ -8,4 +8,10 @@ To run a game use the following command:
 
 ```mvn javafx:run -f "/mnt/Shared/prog/GameBoj/pom.xml" -Djavafx.args="gameName.gb"```
 
+Controls:
+* Arrows for joy pad
+* A and B
+* S for start
+* SPACE for select
+
 Enjoy!
