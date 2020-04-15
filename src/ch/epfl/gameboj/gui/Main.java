@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.html.ImageView;
-
 import ch.epfl.gameboj.GameBoy;
 import ch.epfl.gameboj.component.Joypad.Key;
 import ch.epfl.gameboj.component.cartridge.Cartridge;
@@ -14,6 +12,7 @@ import ch.epfl.gameboj.component.lcd.LcdController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -35,22 +34,26 @@ public final class Main extends Application {
 	 *            run.
 	 * 
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		Application.launch(args);
 	}
 	
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		List<String> ROM = getParameters().getRaw();
+	public void start(final Stage primaryStage) throws Exception {
+		final List<String> ROM = getParameters().getRaw();
+
 		if (ROM.size() != 1) {
+			System.out.println("Rom size = " + ROM.size());
 			System.exit(1);
-		}
+		} 
+
+		
 		GameBoy gameboy = new GameBoy(Cartridge.ofFile(new File(ROM.get(0))));
 		ImageView image = new ImageView();
 		
 		image.setFitHeight(2 * LcdController.LCD_HEIGHT);
-		image.setFitWidth(2 * LcdController.LCD_WIDTH);
+		image.setFitWidth(2 * LcdController.LCD_WIDTH);  
 		
 		Map<KeyCode, Key> keyMap = new HashMap<>();
 		keyMap.put(KeyCode.LEFT, Key.LEFT);
@@ -61,7 +64,7 @@ public final class Main extends Application {
 		stringMap.put("A", Key.A);
 		stringMap.put("B", Key.B);
 		stringMap.put("S", Key.START);
-		stringMap.put(" ", Key.SELECT);
+		stringMap.put(" ", Key.SELECT); 
 		
 		image.setOnKeyPressed(e -> {
 			if (keyMap.containsKey(e.getCode()))
@@ -75,17 +78,17 @@ public final class Main extends Application {
 				gameboy.joypad().keyReleased(keyMap.get(e.getCode()));
 			else if (stringMap.containsKey(e.getText().toUpperCase()))
 				gameboy.joypad().keyReleased(stringMap.get(e.getText().toUpperCase()));
-		});
-		
+		});  
+		 
 		BorderPane display_layout = new BorderPane(image);
 		display_layout.setCenter(image);
 		Scene display = new Scene(display_layout);
 		
-		AnimationTimer timer = new AnimationTimer() {
-			long start = System.nanoTime();
+		final AnimationTimer timer = new AnimationTimer() {
+			long start = System.nanoTime(); 
 
 			@Override
-			public void handle(long now) {
+			public void handle(final long now) {
 				long elapsed = now - start;
 				gameboy.runUntil((long) (GameBoy.CYCLES_PER_NANOSECOND * elapsed));
 				image.setImage(ImageConverter.convert(gameboy.lcdController().currentImage()));

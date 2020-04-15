@@ -1,0 +1,10 @@
+
+#Java files
+.class
+
+#Vscode
+.Vscode/
+
+#Test directories
+test/
+Tests/
