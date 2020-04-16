@@ -6,7 +6,6 @@
 .Vscode/
 
 #Compiled classes
-target/*
 
 #Test directories
 test/
