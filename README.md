@@ -6,7 +6,7 @@ Build is done using maven and jdk 11.
 
 To run a game use the following command:
 
-```mvn javafx:run -f "/mnt/Shared/prog/GameBoj/pom.xml" -Djavafx.args="gameName.gb"```
+```mvn javafx:run -f "LocationInYourComputer/GameBoj/pom.xml" -Djavafx.args="gameName.gb"```
 
 Controls:
 * Arrows for joypad
